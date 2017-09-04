@@ -1,0 +1,15 @@
+library(lubridate)
+library(zoo)
+library(lubridate)
+library(ggplot2)
+
+
+url<-'https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip'
+download.file(url,destfile='C:/Users/leoolivo/Documents/exdata%2Fdata%2Fhousehold_power_consumption.zip')
+unzip('exdata%2Fdata%2Fhousehold_power_consumption.zip',exdir='C:/Users/leoolivo/Documents',overwrite=TRUE)
+mydata <- read.table("C:/Users/leoolivo/Documents/household_power_consumption.txt", header=TRUE, sep=";",na.strings='?',)
+mydata2<-mydata[ mydata$Date=="2/2/2007" | mydata$Date=="1/2/2007",]
+mydata2$Global_active_power<-as.numeric(mydata2$Global_active_power)
+mydata2$Time <- strptime(do.call(paste0,mydata2[c(1,2)]), "%d/%m/%Y%H:%M:%S")
+mydata2$Date <- as.Date(mydata2$Date, "%d/%m/%Y")
+mydata2$Global_reactive_power<-as.numeric(mydata2$Global_reactive_power)
